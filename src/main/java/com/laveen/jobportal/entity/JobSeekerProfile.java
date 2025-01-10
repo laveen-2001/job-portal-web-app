@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "job_seeker_profile")
 public class JobSeekerProfile {
     @Id
-    private int userAccountId;
+    private Integer userAccountId;
 
     @OneToOne
     @JoinColumn(name = "user_account_id")
@@ -21,7 +21,6 @@ public class JobSeekerProfile {
     private String state;
     private String country;
     private String workAuthorization;
-    private String employee;
     private String employmentType;
     private String resume;
     @Column(nullable = true,length = 64)
@@ -37,7 +36,7 @@ public class JobSeekerProfile {
         this.userId = userId;
     }
 
-    public JobSeekerProfile(int userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String workAuthorization, String employee, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
+    public JobSeekerProfile(Integer userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String workAuthorization, String employee, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
         this.userAccountId = userAccountId;
         this.userId = userId;
         this.firstName = firstName;
@@ -46,18 +45,17 @@ public class JobSeekerProfile {
         this.state = state;
         this.country = country;
         this.workAuthorization = workAuthorization;
-        this.employee = employee;
         this.employmentType = employmentType;
         this.resume = resume;
         this.profilePhoto = profilePhoto;
         this.skills = skills;
     }
 
-    public int getUserAccountId() {
+    public Integer getUserAccountId() {
         return userAccountId;
     }
 
-    public void setUserAccountId(int userAccountId) {
+    public void setUserAccountId(Integer userAccountId) {
         this.userAccountId = userAccountId;
     }
 
@@ -117,14 +115,6 @@ public class JobSeekerProfile {
         this.workAuthorization = workAuthorization;
     }
 
-    public String getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(String employee) {
-        this.employee = employee;
-    }
-
     public String getEmploymentType() {
         return employmentType;
     }
@@ -157,6 +147,11 @@ public class JobSeekerProfile {
         this.skills = skills;
     }
 
+    @Transient
+    public String getPhotosImagePath(){
+        if (profilePhoto==null || userAccountId==null)  return null;
+        return "/photos/candidate/"+userAccountId+"/"+profilePhoto;
+    }
     @Override
     public String toString() {
         return "JobSeekerProfile{" +
@@ -168,11 +163,9 @@ public class JobSeekerProfile {
                 ", state='" + state + '\'' +
                 ", country='" + country + '\'' +
                 ", workAuthorization='" + workAuthorization + '\'' +
-                ", employee='" + employee + '\'' +
                 ", employmentType='" + employmentType + '\'' +
                 ", resume='" + resume + '\'' +
                 ", profilePhoto='" + profilePhoto + '\'' +
-                ", skills=" + skills +
                 '}';
     }
 }
